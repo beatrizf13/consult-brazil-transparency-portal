@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ChartProvider, useChart } from "./hooks/useChart";
+import Form from "./components/Form";
+import Chart from "./components/Chart";
 
-function App() {
+const App: React.FC = () => {
+  const { loading, error } = useChart();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+    <ChartProvider>
+      <h1>Consultar as parcelas do Bolsa Família em um ano por município</h1>
+      <p>
         <a
-          className="App-link"
-          href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
+          href="https://www.ibge.gov.br/explica/codigos-dos-municipios.php"
         >
-          Learn React
+          Verifique o código IBGE da cidade aqui.
         </a>
-      </header>
-    </div>
+      </p>
+
+      <Form />
+      <Chart />
+      {loading && <p>Carregando</p>}
+      {error && <p>Sistema indisponível</p>}
+    </ChartProvider>
   );
-}
+};
 
 export default App;
